@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>匹克球｜互動網頁簡報</title>
+  <style>
+    :root{--paper:#fffcf8;--cream:#fff2e9;--pale:#fbd6c6;--coral:#f56a43;--orange:#df4a2f;--dark:#842b20;--ink:#20201f;--muted:#625a55}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#e8e4df;color:var(--ink);font-family:PingFang TC,Microsoft JhengHei,Noto Sans TC,system-ui,sans-serif}
+    body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px}
+    .deck{width:min(1280px,calc(100vw - 32px));aspect-ratio:16/9;background:var(--paper);box-shadow:0 18px 45px #4b312a2b;overflow:hidden;position:relative;container-type:inline-size}
+    .slide{display:none;width:100%;height:100%;position:absolute;inset:0;padding:5% 5% 5.2%;background:var(--paper);border-left:1.1cqw solid var(--orange)}
+    .slide.active{display:block}.slide:focus{outline:none}
+    h1,h2,h3,p{margin:0}h1{font-size:6.4cqw;line-height:1.14}h2{font-size:3.55cqw;line-height:1.18}h3{font-size:2.45cqw;line-height:1.2;color:var(--dark)}p,li{font-size:1.95cqw;line-height:1.43}
+    .eyebrow{font-size:2.1cqw;color:var(--orange);font-weight:700;margin-bottom:2cqw}
+    .source{position:absolute;left:5%;right:5%;bottom:2.2%;border-top:1px solid var(--pale);padding-top:1.1cqw;font-size:1.12cqw;color:var(--muted);line-height:1.25}
+    .shape{position:absolute;display:block;border-radius:22%;transform:rotate(45deg);pointer-events:none}.shape.big{width:23cqw;height:23cqw;right:5%;top:-10%;background:var(--coral)}.shape.med{width:13cqw;height:13cqw;right:2%;top:18%;background:var(--pale)}.shape.low{width:17cqw;height:17cqw;right:3%;bottom:14%;background:var(--orange)}.shape.small{width:6cqw;height:6cqw;right:27%;bottom:4%;background:var(--pale)}
+    .intro{padding-top:10%;max-width:69%}.intro .sub{font-size:2.5cqw;color:var(--orange);font-weight:700;margin-top:2cqw}.accent-line{height:0.3cqw;background:var(--coral);margin:3.3cqw 0 2.6cqw;width:66%}
+    .intro ul,.origin ul{list-style:none;margin:0;padding:0}.intro li,.origin li{position:relative;padding-left:2.7cqw;margin:0 0 2.2cqw}.intro li::before,.origin li::before{content:"";position:absolute;left:0;top:.65cqw;width:.9cqw;height:.9cqw;border-radius:50%;background:var(--orange)}
+    .origin{display:grid;grid-template-columns:46% 54%;margin-top:5.4cqw;height:30cqw}.origin-left{position:relative;border-right:1px solid var(--pale)}.origin-left .year{font-size:8.7cqw;line-height:1;color:var(--orange);font-weight:700}.origin-left .season{font-size:2.9cqw;color:var(--dark);font-weight:700;margin-top:1.5cqw}.origin-left .mini-a,.origin-left .mini-b{position:absolute;display:block;transform:rotate(45deg);border-radius:18%}.mini-a{width:7cqw;height:7cqw;left:10%;bottom:8%;background:var(--pale)}.mini-b{width:4cqw;height:4cqw;left:29%;bottom:11%;background:var(--coral)}.origin ul{padding:1.5cqw 0 0 3.6cqw}.origin li{margin-bottom:3.4cqw}
+    .court-layout{display:grid;grid-template-columns:55% 45%;gap:2cqw;margin-top:4.7cqw}.court-size{font-size:6.6cqw;line-height:1;color:var(--orange);font-weight:700}.unit{font-size:2.7cqw;color:var(--dark);font-weight:700;margin:1cqw 0 2.2cqw}.court-details{font-size:2.5cqw}.gear{margin-top:8.1cqw;max-width:95%;font-size:1.9cqw}.court-wrap{padding-right:3.5cqw}.court{width:100%;aspect-ratio:1.58;border:.3cqw solid var(--orange);background:var(--cream);position:relative}.court .net{position:absolute;left:50%;top:0;bottom:0;border-left:.3cqw solid var(--orange)}.court .kitchen-left{position:absolute;left:25%;top:0;bottom:0;border-left:.22cqw solid var(--coral)}.court .kitchen-right{position:absolute;left:75%;top:0;bottom:0;border-left:.22cqw solid var(--coral)}.court .service-left{position:absolute;left:0;top:50%;width:25%;border-top:.22cqw solid var(--coral)}.court .service-right{position:absolute;right:0;top:50%;width:25%;border-top:.22cqw solid var(--coral)}.court-caption{font-size:1.85cqw;color:var(--dark);font-weight:700;margin-top:2.5cqw}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:5.2%;margin-top:5cqw}.step{min-height:23.4cqw;border:1.5px solid var(--pale);border-radius:2cqw;padding:3cqw 2.6cqw;background:white}.step:nth-child(2){background:var(--cream)}.step .diamond{width:5cqw;height:5cqw;background:var(--coral);border-radius:22%;transform:rotate(45deg);margin:0 0 4cqw 1.2cqw}.step:nth-child(2) .diamond{background:var(--orange)}.step p{font-size:1.85cqw;margin-top:2cqw}
+    .score-layout{display:grid;grid-template-columns:50% 50%;margin-top:4.5cqw}.score-left{padding-right:4cqw;border-right:1px solid var(--pale)}.score-right{padding-left:4cqw}.big-number{font-size:9.5cqw;line-height:1;color:var(--orange);font-weight:700}.big-number small{font-size:2.8cqw;color:var(--dark);margin-left:1cqw}.score-left p,.score-right p{font-size:2.05cqw;margin-top:3cqw}.score-right .score-code{font-size:6.2cqw;line-height:1;color:var(--orange);font-weight:700}.score-right p:last-child{margin-top:5cqw}.pending{position:absolute;left:5%;right:5%;bottom:9%;background:var(--cream);padding:1cqw 1.4cqw;color:var(--dark);font-size:1.65cqw;font-weight:700}
+    .controls{width:min(1280px,calc(100vw - 32px));display:flex;align-items:center;justify-content:space-between;gap:12px}.nav{border:0;background:var(--dark);color:white;border-radius:9px;padding:10px 18px;font:600 16px inherit;cursor:pointer}.nav:hover:not(:disabled){background:var(--orange)}.nav:focus-visible{outline:3px solid var(--orange);outline-offset:3px}.nav:disabled{opacity:.38;cursor:not-allowed}.page-indicator{font-size:15px;color:#4b302b;font-weight:700}
+    .hoverable{cursor:help;transition:color .18s ease,background-color .18s ease,transform .18s ease,box-shadow .18s ease,outline-color .18s ease;outline:2px solid transparent;outline-offset:4px;border-radius:6px}
+    .hoverable:hover,.hoverable:focus-visible{color:var(--dark);background-color:var(--cream);transform:translateY(-3px);outline-color:var(--pale)}
+    .step.hoverable:hover,.step.hoverable:focus-visible{background:var(--cream);box-shadow:0 13px 28px #842b2026;transform:translateY(-8px);outline-color:var(--coral)}
+    .court.hoverable:hover,.court.hoverable:focus-visible{background:#fbd6c6;box-shadow:0 12px 26px #842b2026;transform:scale(1.025);outline-color:var(--coral)}
+    .court.hoverable:hover .net,.court.hoverable:focus-visible .net{border-color:var(--dark)}
+    .big-number.hoverable:hover,.score-code.hoverable:hover,.big-number.hoverable:focus-visible,.score-code.hoverable:focus-visible{color:var(--dark);background:none;transform:scale(1.035);transform-origin:left center}
+    .pending.hoverable:hover,.pending.hoverable:focus-visible{background:var(--pale);transform:translateY(-3px)}
+    .shape{pointer-events:auto;transition:transform .22s ease,filter .22s ease}.shape:hover{transform:rotate(54deg) scale(1.07);filter:brightness(1.06)}
+    .interaction-tip{position:fixed;z-index:1000;max-width:min(360px,calc(100vw - 24px));padding:10px 13px;border-radius:10px;background:var(--dark);color:#fff;font-size:15px;line-height:1.45;box-shadow:0 10px 24px #3217133b;pointer-events:none;opacity:0;transform:translateY(5px);transition:opacity .12s ease,transform .12s ease}
+    .interaction-tip.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:700px){body{justify-content:flex-start;padding:10px;gap:10px}.deck{width:100%;aspect-ratio:auto;min-height:calc(100dvh - 82px);overflow:auto}.slide{position:relative;min-height:calc(100dvh - 82px);height:auto;padding:28px 22px 92px;border-left:8px solid var(--orange)}h1{font-size:clamp(46px,12vw,72px)}h2{font-size:clamp(32px,8vw,45px)}h3{font-size:24px}p,li{font-size:18px}.eyebrow{font-size:20px;margin-bottom:18px}.source{left:22px;right:22px;bottom:18px;padding-top:8px;font-size:11px}.shape.big{width:150px;height:150px;right:-28px;top:-65px}.shape.med{width:80px;height:80px;right:-18px;top:100px}.shape.low{width:130px;height:130px;right:-48px;bottom:90px}.shape.small{display:none}.intro{padding-top:90px;max-width:100%}.intro .sub{font-size:23px;margin-top:18px}.accent-line{height:3px;margin:28px 0 22px;width:75%}.intro li,.origin li{padding-left:24px;margin-bottom:16px}.intro li::before,.origin li::before{width:8px;height:8px;top:9px}.origin{display:block;margin-top:34px;height:auto}.origin-left{border-right:0;border-bottom:1px solid var(--pale);padding-bottom:20px}.origin-left .year{font-size:88px}.origin-left .season{font-size:28px;margin-top:6px}.origin-left .mini-a,.origin-left .mini-b{display:none}.origin ul{padding:24px 0 0}.origin li{margin-bottom:20px}.court-layout,.score-layout{display:block;margin-top:32px}.court-size{font-size:65px}.unit{font-size:27px;margin:4px 0 14px}.court-details{font-size:24px}.gear{font-size:18px;margin-top:24px}.court-wrap{padding:28px 0 0}.court{border-width:3px}.court .net{border-width:3px}.court .kitchen-left,.court .kitchen-right,.court .service-left,.court .service-right{border-width:2px}.court-caption{font-size:17px;margin-top:16px}.steps{display:block;margin-top:28px}.step{min-height:auto;padding:20px;margin-bottom:14px;border-radius:18px}.step .diamond{width:36px;height:36px;margin:8px 0 24px 8px}.step p{font-size:18px;margin-top:12px}.score-left{border-right:0;border-bottom:1px solid var(--pale);padding:0 0 22px}.score-right{padding:24px 0 0}.big-number{font-size:90px}.big-number small{font-size:26px}.score-left p,.score-right p{font-size:18px;margin-top:18px}.score-right .score-code{font-size:60px}.score-right p:last-child{margin-top:22px}.pending{position:relative;left:auto;right:auto;bottom:auto;margin-top:24px;padding:12px;font-size:16px}.controls{width:100%}.nav{font-size:15px;padding:10px 13px}}
+    @media(prefers-reduced-motion:no-preference){.slide.active{animation:appear .18s ease-out}@keyframes appear{from{opacity:.65}to{opacity:1}}}
+    @media(prefers-reduced-motion:reduce){.hoverable,.shape,.interaction-tip{transition:none}.hoverable:hover,.hoverable:focus-visible,.shape:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="匹克球五頁互動簡報">
+    <section class="slide active" data-slide="1" aria-label="第 1 頁：匹克球">
+      <span class="shape big"></span><span class="shape med"></span><span class="shape low"></span><span class="shape small"></span>
+      <div class="intro"><h1>匹克球</h1><p class="sub">一眼看懂這項球拍運動</p><div class="accent-line"></div>
+        <ul><li>使用實心球拍與有孔塑膠球，隔網對打。</li><li>可打單打或雙打，兼具休閒與競技玩法。</li><li>掌握場地、發球與基本規則，就能看懂回合。</li></ul>
+      </div>
+      <p class="source">依據來源：中華民國匹克球總會〈匹克球是什麼？〉</p>
+    </section>
+    <section class="slide" data-slide="2" aria-label="第 2 頁：從家庭遊戲開始" hidden>
+      <p class="eyebrow">02</p><h2>從家庭遊戲開始</h2>
+      <div class="origin"><div class="origin-left"><div class="year">1965</div><p class="season">年夏天</p><span class="mini-a"></span><span class="mini-b"></span></div>
+        <ul><li>起源於美國華盛頓州班布里奇島。</li><li>Joel Pritchard、Bill Bell 與 Barney McCallum 利用現有器材，逐步建立玩法。</li><li>早期玩法結合小場地、球拍與有孔塑膠球。</li></ul>
+      </div>
+      <p class="source">依據來源：PicklePi〈匹克球的起源〉；〈匹克球旋風來襲！〉</p>
+    </section>
+    <section class="slide" data-slide="3" aria-label="第 3 頁：場地與基本裝備" hidden>
+      <p class="eyebrow">03</p><h2>場地與基本裝備</h2>
+      <div class="court-layout"><div><div class="court-size">20 × 44</div><p class="unit">英尺</p><p class="court-details">約 6.10 × 13.41 公尺</p><p class="gear">基本裝備：球拍、有孔塑膠球、球網、合適場地與具支撐及止滑功能的鞋。</p></div>
+        <div class="court-wrap"><div class="court" role="img" aria-label="匹克球場地示意圖：中央球網，兩側非截擊區與發球區"><span class="net"></span><span class="kitchen-left"></span><span class="kitchen-right"></span><span class="service-left"></span><span class="service-right"></span></div><p class="court-caption">球網兩側各 7 英尺：非截擊區（廚房區）</p></div>
+      </div>
+      <p class="source">依據來源：中華民國匹克球總會〈入門完整教學〉；〈匹克球是什麼？〉</p>
+    </section>
+    <section class="slide" data-slide="4" aria-label="第 4 頁：一個回合怎麼打" hidden>
+      <p class="eyebrow">04</p><h2>一個回合怎麼打？</h2>
+      <div class="steps"><article class="step"><div class="diamond"></div><h3>斜對角發球</h3><p>從端線後方發球，送進斜對角的有效發球區。</p></article><article class="step"><div class="diamond"></div><h3>各落地一次</h3><p>接發方、發球方各讓球落地一次，之後才能選擇截擊。</p></article><article class="step"><div class="diamond"></div><h3>廚房區限制</h3><p>可以回擊已落地的球；不能在區內截擊空中球。</p></article></div>
+      <p class="source">依據來源：中華民國匹克球總會〈入門完整教學〉</p>
+    </section>
+    <section class="slide" data-slide="5" aria-label="第 5 頁：計分與第一次體驗" hidden>
+      <p class="eyebrow">05</p><h2>計分與第一次體驗</h2>
+      <div class="score-layout"><div class="score-left"><div class="big-number">11<small>分</small></div><p>一般一局 11 分，須領先 2 分；傳統邊線得分制由發球方贏得回合才加分。</p></div><div class="score-right"><div class="score-code">0–0–2</div><p>雙打開局報分：發球方分數、接發方分數、發球者編號。</p><p>初次體驗先練穩定發球、接發與安全移動，再查詢課程或活動。</p></div></div>
+      <p class="pending">待補：匹克球分析報告及圖表檔名</p>
+      <p class="source">依據來源：中華民國匹克球總會〈入門完整教學〉；〈匹克球是什麼？〉</p>
+    </section>
+  </main>
+  <nav class="controls" aria-label="簡報導覽"><button class="nav" id="previous" type="button" aria-label="上一頁" disabled>上一頁</button><span class="page-indicator" id="page-indicator" aria-live="polite">1 / 5</span><button class="nav" id="next" type="button" aria-label="下一頁">下一頁</button></nav>
+  <script>
+    (()=>{
+      const slides=Array.from(document.querySelectorAll('.slide'));
+      const previous=document.getElementById('previous');
+      const next=document.getElementById('next');
+      const indicator=document.getElementById('page-indicator');
+      const tip=document.createElement('div');
+      tip.id='interaction-tip';tip.className='interaction-tip';tip.setAttribute('role','tooltip');document.body.append(tip);
+      let tipOwner=null;
+      function hideTip(){tip.classList.remove('visible');tipOwner=null;}
+      function positionTip(x,y){
+        const margin=12;
+        tip.style.left=`${Math.min(x+16,window.innerWidth-tip.offsetWidth-margin)}px`;
+        tip.style.top=`${y+20+tip.offsetHeight>window.innerHeight-margin?Math.max(margin,y-tip.offsetHeight-14):y+20}px`;
+      }
+      function showTip(element,x,y){
+        tipOwner=element;tip.textContent=element.dataset.tip||element.textContent.trim();
+        tip.classList.add('visible');positionTip(x,y);
+      }
+      const interactions=[
+        ['h1, h2, .intro .sub, .origin-left .year, .intro li, .origin li, .court-details, .gear, .court-caption, .step, .score-left p, .score-right p, .pending',null],
+        ['.court',()=>document.querySelector('.court-caption').textContent.trim()],
+        ['.big-number',()=>document.querySelector('.score-left p').textContent.trim()],
+        ['.score-code',()=>document.querySelector('.score-right p').textContent.trim()]
+      ];
+      interactions.forEach(([selector,tipText])=>document.querySelectorAll(selector).forEach(element=>{
+        element.classList.add('hoverable');element.tabIndex=0;
+        element.dataset.tip=tipText?tipText():element.textContent.trim();
+        element.setAttribute('aria-describedby','interaction-tip');
+        element.addEventListener('pointerenter',event=>showTip(element,event.clientX,event.clientY));
+        element.addEventListener('pointermove',event=>{if(tipOwner===element)positionTip(event.clientX,event.clientY)});
+        element.addEventListener('pointerleave',()=>{if(tipOwner===element)hideTip()});
+        element.addEventListener('focus',()=>{const rect=element.getBoundingClientRect();showTip(element,rect.right,rect.top)});
+        element.addEventListener('blur',()=>{if(tipOwner===element)hideTip()});
+      }));
+      let page=0;
+      function show(index){
+        hideTip();
+        const target=Math.min(Math.max(index,0),slides.length-1);
+        slides.forEach((slide,i)=>{const active=i===target;slide.classList.toggle('active',active);slide.hidden=!active;slide.setAttribute('aria-hidden',String(!active));});
+        page=target;indicator.textContent=`${page+1} / ${slides.length}`;
+        previous.disabled=page===0;next.disabled=page===slides.length-1;
+        document.querySelector('.deck').scrollTop=0;
+      }
+      previous.addEventListener('click',()=>show(page-1));
+      next.addEventListener('click',()=>show(page+1));
+      document.addEventListener('keydown',event=>{
+        if(event.altKey||event.ctrlKey||event.metaKey||event.repeat)return;
+        if(event.key==='ArrowLeft'){event.preventDefault();show(page-1)}
+        if(event.key==='ArrowRight'){event.preventDefault();show(page+1)}
+      });
+      window.addEventListener('scroll',hideTip,{passive:true});
+      show(0);
+    })();
+  </script>
+</body>
+</html>
